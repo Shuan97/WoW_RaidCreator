@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Runtime.Remoting.Contexts;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
@@ -15,16 +14,16 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 using WoW_RaidCreator.ViewModels;
 
-namespace WoW_RaidCreator
+namespace WoW_RaidCreator.Views
 {
     /// <summary>
-    /// Interaction logic for MainWindow.xaml
+    /// Interaction logic for HomePageView.xaml
     /// </summary>
-    public partial class MainWindow : Window
+    public partial class HomePageView : UserControl
     {
-        public MainWindow()
+        public HomePageView()
         {
-            InitializeComponent();
+            InitializeComponent();         
         }
     }
 }
