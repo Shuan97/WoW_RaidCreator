@@ -4,9 +4,243 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:WoW_RaidCreator.Views"
+             xmlns:system="clr-namespace:System;assembly=mscorlib"
+             xmlns:models="clr-namespace:WoW_RaidCreator.Models"
+             xmlns:viewModels="clr-namespace:WoW_RaidCreator.ViewModels"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
-    <Grid>
-        <TextBlock FontSize="20" Text="TODO" />
+    <UserControl.Resources>
+        <!--Enum data provider-->
+        <!--<ObjectDataProvider x:Key="ClassType"
+                            MethodName="GetValues"
+                            ObjectType="{x:Type system:Enum}">
+            <ObjectDataProvider.MethodParameters>
+                <x:Type TypeName="models:Character+ClassType"/>
+            </ObjectDataProvider.MethodParameters>
+        </ObjectDataProvider>-->
+
+        <!--TextBox style-->
+        <Style x:Key="TextBoxStyle" TargetType="{x:Type TextBox}" >
+            <Setter Property="Width" Value="100"/>
+            <Setter Property="Margin" Value="5"/>
+        </Style>
+
+        <!--Label style-->
+        <Style x:Key="LabelStyle" TargetType="{x:Type Label}">
+            <Setter Property="Margin" Value="0"/>
+            <Setter Property="Width" Value="70"/>
+            <Setter Property="HorizontalAlignment" Value="Left"/>
+            <Setter Property="VerticalAlignment" Value="Center"/>
+        </Style>
+
+        <!--Grid Style-->
+        <Style x:Key="GridStyle" TargetType="{x:Type Grid}">
+            <Style.Resources>
+                <Style TargetType="Grid"></Style>
+            </Style.Resources>
+        </Style>
+
+        <!--StackPanel Style-->
+        <Style x:Key="StackPanelStyle" TargetType="{x:Type StackPanel}">
+            <Setter Property="Margin" Value="0,5,0,5"/>
+            <Setter Property="Orientation" Value="Horizontal"/>
+        </Style>
+
+        <!--RadioButton Style--> 
+        <Style x:Key="RadioButtonStyle" TargetType="{x:Type RadioButton}">
+            <Setter Property="Width" Value="100"/>
+            <Setter Property="Margin" Value="2"/>
+        </Style>
+
+        <!--Border Style--> 
+        <Style x:Key="BorderStyle" TargetType="{x:Type Border}">
+            <Setter Property="BorderThickness" Value="0,0,0,1"/>
+            <Setter Property="BorderBrush" Value="Gray"/>
+            <Setter Property="Margin" Value="0"/>
+        </Style>
+    </UserControl.Resources>
+
+
+    <Grid Background="#22000000">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition/>
+            <ColumnDefinition/>
+        </Grid.ColumnDefinitions>
+
+        <Border Grid.Column="0" BorderBrush="DimGray" BorderThickness="2" CornerRadius="10" Padding="15" Margin="10" Background="#22000000" VerticalAlignment="Top" HorizontalAlignment="Left">
+            <StackPanel x:Name="AddPanel" HorizontalAlignment="Left" VerticalAlignment="Top">
+
+                <Border Style="{StaticResource BorderStyle}">
+                    <StackPanel Style="{StaticResource StackPanelStyle}">
+                        <Label Style="{StaticResource LabelStyle}">Name</Label>
+                        <TextBox Text="{Binding Name, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" 
+                                 Style="{StaticResource TextBoxStyle}"/>
+                    </StackPanel>
+                </Border>
+
+                <!--COMBOBOXES-->
+                <Border Style="{StaticResource BorderStyle}">
+                    <StackPanel Style="{StaticResource StackPanelStyle}">
+                        <Label Style="{StaticResource LabelStyle}">Role</Label>
+                        <!--{Binding Source={StaticResource ClassType}}-->
+                        <ComboBox ItemsSource="{Binding ClassList}"
+                                  Width="100"
+                                  Margin="5"
+                                  DisplayMemberPath="Class"
+                                  SelectedValuePath="Class"
+                                  SelectedValue="{Binding SelectedClass, Mode=TwoWay}"/>
+                    </StackPanel>
+                </Border>
+
+                <Border Style="{StaticResource BorderStyle}">
+                    <StackPanel Style="{StaticResource StackPanelStyle}">
+                        <Label Style="{StaticResource LabelStyle}">MainSpec</Label>
+                        <StackPanel Orientation="Vertical">
+                            <RadioButton Style="{StaticResource RadioButtonStyle}" 
+                                         x:Name="Rb1Spec1"
+                                         IsChecked="{Binding Path=MainSpecMode[0], Mode=TwoWay}"
+                                         Content="{Binding Spec1}" 
+                                         CommandParameter="{Binding Content, ElementName=Rb1Spec1}"
+                                         Command="{Binding Path=IsCheckedMainSpecCommand}"/>
+                            <RadioButton Style="{StaticResource RadioButtonStyle}" 
+                                         x:Name="Rb1Spec2"
+                                         IsChecked="{Binding Path=MainSpecMode[1], Mode=TwoWay}"
+                                         Content="{Binding Spec2}" 
+                                         CommandParameter="{Binding Content, ElementName=Rb1Spec2}"
+                                         Command="{Binding Path=IsCheckedMainSpecCommand}"/>
+                            <RadioButton Style="{StaticResource RadioButtonStyle}" 
+                                         x:Name="Rb1Spec3"
+                                         IsChecked="{Binding Path=MainSpecMode[2], Mode=TwoWay}"
+                                         Content="{Binding Spec3}" 
+                                         CommandParameter="{Binding Content, ElementName=Rb1Spec3}"
+                                         Command="{Binding Path=IsCheckedMainSpecCommand}"/>
+                        </StackPanel>
+                    </StackPanel>
+                </Border>
+
+                <Border Style="{StaticResource BorderStyle}">
+                    <StackPanel Style="{StaticResource StackPanelStyle}">
+                        <Label Style="{StaticResource LabelStyle}">OffSpec</Label>
+                        <StackPanel Orientation="Vertical">
+                            <RadioButton Style="{StaticResource RadioButtonStyle}" 
+                                     x:Name="Rb2Spec1"
+                                     IsChecked="{Binding Path=OffSpecMode[0], Mode=TwoWay}"
+                                     Content="{Binding Spec1}"
+                                     CommandParameter="{Binding Content, ElementName=Rb2Spec1}"
+                                     Command="{Binding Path=IsCheckedOffSpecCommand}"/>
+                            <RadioButton Style="{StaticResource RadioButtonStyle}" 
+                                     x:Name="Rb2Spec2"
+                                     IsChecked="{Binding Path=OffSpecMode[1], Mode=TwoWay}"
+                                     Content="{Binding Spec2}" 
+                                     CommandParameter="{Binding ElementName=Rb2Spec2, Path=Content}"
+                                     Command="{Binding Path=IsCheckedOffSpecCommand}"/>
+                            <RadioButton Style="{StaticResource RadioButtonStyle}" 
+                                     x:Name="Rb2Spec3"
+                                     IsChecked="{Binding Path=OffSpecMode[2], Mode=TwoWay}"
+                                     Content="{Binding Spec3}"
+                                     CommandParameter="{Binding ElementName=Rb2Spec3, Path=Content}"
+                                     Command="{Binding Path=IsCheckedOffSpecCommand}"/>
+                        </StackPanel>
+                    </StackPanel>
+                </Border>
+
+                <!--<StackPanel Style="{StaticResource StackPanelStyle}">
+                    <Label Style="{StaticResource LabelStyle}">MS GearScore</Label>
+                    <TextBox Text="{Binding Character.MainSpecGearScore, Mode=OneWayToSource}" 
+                         Style="{StaticResource TextBoxStyle}"/>
+                </StackPanel>-->
+
+                <!--<StackPanel Style="{StaticResource StackPanelStyle}">
+                    <Label Style="{StaticResource LabelStyle}">OffSpec</Label>
+                    <TextBox Text="{Binding Character.OffSpec, Mode=OneWayToSource}" 
+                         Style="{StaticResource TextBoxStyle}"/>
+                </StackPanel>-->
+
+                <!--<StackPanel Style="{StaticResource StackPanelStyle}">
+                    <Label Style="{StaticResource LabelStyle}">OS GearScore</Label>
+                    <TextBox Text="{Binding Character.OffSpecGearScore, Mode=OneWayToSource}" 
+                         Style="{StaticResource TextBoxStyle}"/>
+                </StackPanel>-->
+
+                <Border Style="{StaticResource BorderStyle}">
+                    <Button Command="{Binding Path=AddNewCharacterCommand}"
+                        Content="Add Character"
+                        FontSize="10"
+                        Width="80"
+                        Height="30"
+                        Margin="10"/>
+                </Border>
+
+                <Border Style="{StaticResource BorderStyle}">
+                    <Button Command="{Binding Path=DeleteCharacterCommand}"
+                            Content="Delete Character"
+                            FontSize="10"
+                            Width="80"
+                            Height="30"
+                            Margin="10"/>
+                </Border>
+            </StackPanel>
+        </Border>
+        
+        <!--Data table-->
+        <DataGrid Grid.Column="1" 
+                  ItemsSource="{Binding DataTable, UpdateSourceTrigger=PropertyChanged}" 
+                  Margin="30"
+                  AutoGenerateColumns="False"
+                  CanUserResizeRows="False"
+                  CanUserResizeColumns="False"
+                  CanUserReorderColumns="False"
+                  HorizontalAlignment="Right"
+                  BorderThickness="1"
+                  HeadersVisibility="Column"
+                  IsReadOnly="True"
+                  SelectionMode="Single"
+                  SelectedItem="{Binding SelectedCharacterRow, Mode=OneWayToSource}">
+            <DataGrid.RowStyle>
+                <Style TargetType="{x:Type DataGridRow}">
+                    <Style.Triggers>
+                        <DataTrigger Binding="{Binding Class}" Value="DeathKnight">
+                            <Setter Property="Background" Value="#DDC41F3B"/>
+                        </DataTrigger>
+                        <DataTrigger Binding="{Binding Class}" Value="Druid">
+                            <Setter Property="Background" Value="#DDFF7D0A"/>
+                        </DataTrigger>
+                        <DataTrigger Binding="{Binding Class}" Value="Hunter">
+                            <Setter Property="Background" Value="#DDABD473"/>
+                        </DataTrigger>
+                        <DataTrigger Binding="{Binding Class}" Value="Mage">
+                            <Setter Property="Background" Value="#DD69CCF0"/>
+                        </DataTrigger>
+                        <DataTrigger Binding="{Binding Class}" Value="Paladin">
+                            <Setter Property="Background" Value="#DDF58CBA"/>
+                        </DataTrigger>
+                        <DataTrigger Binding="{Binding Class}" Value="Priest">
+                            <Setter Property="Background" Value="#DDFFFFFF"/>
+                        </DataTrigger>
+                        <DataTrigger Binding="{Binding Class}" Value="Rogue">
+                            <Setter Property="Background" Value="#DDFFF569"/>
+                        </DataTrigger>
+                        <DataTrigger Binding="{Binding Class}" Value="Shaman">
+                            <Setter Property="Background" Value="#DD0070DE"/>
+                        </DataTrigger>
+                        <DataTrigger Binding="{Binding Class}" Value="Warlock">
+                            <Setter Property="Background" Value="#DD9482C9"/>
+                        </DataTrigger>
+                        <DataTrigger Binding="{Binding Class}" Value="Warrior">
+                            <Setter Property="Background" Value="#DDC79C6E"/>
+                        </DataTrigger>
+                    </Style.Triggers>
+                </Style>
+            </DataGrid.RowStyle>
+            <DataGrid.Columns>
+                <DataGridTextColumn Binding="{Binding Name}" Header="Name" Width="120" IsReadOnly="True"/>
+                <DataGridTextColumn Binding="{Binding Class}" Header="Class" Width="80" IsReadOnly="True"/>
+                <DataGridTextColumn Binding="{Binding MainSpec}" Header="Main Spec" Width="80" IsReadOnly="True"/>
+                <DataGridTextColumn Binding="{Binding MainSpecGearScore, StringFormat=\{0:F1\}}" Header="MS" Width="30" IsReadOnly="True"/>
+                <DataGridTextColumn Binding="{Binding OffSpec}" Header="Off Spec" Width="80" IsReadOnly="True"/>
+                <DataGridTextColumn Binding="{Binding OffSpecGearScore, StringFormat=\{0:F1\}}" Header="OS" Width="30" IsReadOnly="True"/>
+            </DataGrid.Columns>
+        </DataGrid>
+
     </Grid>
 </UserControl>

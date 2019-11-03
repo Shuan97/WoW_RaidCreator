@@ -20,7 +20,8 @@
         <Style TargetType="Label" x:Key="TextBlockStyle">
             <Setter Property="FontFamily" Value="Segoe Print"/>
             <Setter Property="FontSize" Value="16"/>
-            <Setter Property="Foreground" Value="White"/>
+            <Setter Property="Foreground" Value="Black"/>
+            <Setter Property="FontWeight" Value="Bold"/>
             <Setter Property="HorizontalAlignment" Value="Left"/>
             <Setter Property="VerticalAlignment" Value="Center"/>
             <Setter Property="Margin" Value="10, 0, 0, 0"/>
@@ -53,25 +54,30 @@
     </Window.Resources>
     <Grid>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="200"/>
+            <ColumnDefinition Width="180"/>
             <ColumnDefinition/>
         </Grid.ColumnDefinitions>
-        <StackPanel Background="SteelBlue">
-            <Canvas Background="DarkCyan" Height="120"/>
+        <StackPanel Background="#55000000">
+            <Canvas Background="DimGray" Height="120"/>
 
 
 
             <Button Style="{StaticResource BaseButtonStyle}" Command="{Binding Path=LoadHomePageCommand}" >
                 <Grid>
                     <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="10"/>
+                        <ColumnDefinition Width="15"/>
                         <ColumnDefinition Width="*"/>
-                        <ColumnDefinition Width="30"/>
+                        <ColumnDefinition Width="25"/>
                     </Grid.ColumnDefinitions>
 
                     <Canvas Grid.Column="0" Background="#50000000"/>
                     <Label x:Name="LblHomePage" Content="Home Page" Grid.Column="1" Style="{StaticResource TextBlockStyle}"/>
-                    <Canvas Grid.Column="2" Background="#50F0F0F0"/>
+                    <Canvas Grid.Column="2">
+                        <Canvas.Background>
+                            <ImageBrush ImageSource="Resources/Chevron.png" Stretch="Uniform" AlignmentX="Left"/>
+                        </Canvas.Background>
+                    </Canvas>
+
                 </Grid>
             </Button>
 
@@ -80,14 +86,18 @@
             <Button Style="{StaticResource BaseButtonStyle}" Command="{Binding Path=LoadCharacterPageCommand}">
                 <Grid>
                     <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="10"/>
+                        <ColumnDefinition Width="15"/>
                         <ColumnDefinition Width="*"/>
-                        <ColumnDefinition Width="30"/>
+                        <ColumnDefinition Width="25"/>
                     </Grid.ColumnDefinitions>
 
                     <Canvas Grid.Column="0" Background="#50000000"/>
                     <Label x:Name="LblText1" Content="Players" Grid.Column="1" Style="{StaticResource TextBlockStyle}"/>
-                    <Canvas Grid.Column="2" Background="#50F0F0F0"/>
+                    <Canvas Grid.Column="2">
+                        <Canvas.Background>
+                            <ImageBrush ImageSource="Resources/Chevron.png" Stretch="Uniform" AlignmentX="Left"/>
+                        </Canvas.Background>
+                    </Canvas>
                 </Grid>
             </Button>
 
@@ -96,14 +106,18 @@
             <Button Style="{StaticResource BaseButtonStyle}">
                 <Grid>
                     <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="10"/>
+                        <ColumnDefinition Width="15"/>
                         <ColumnDefinition Width="*"/>
-                        <ColumnDefinition Width="30"/>
+                        <ColumnDefinition Width="25"/>
                     </Grid.ColumnDefinitions>
 
                     <Canvas Grid.Column="0" Background="#50000000"/>
                     <Label x:Name="LblText2" Content="ICC25" Grid.Column="1" Style="{StaticResource TextBlockStyle}"/>
-                    <Canvas Grid.Column="2" Background="#50F0F0F0"/>
+                    <Canvas Grid.Column="2">
+                        <Canvas.Background>
+                            <ImageBrush ImageSource="Resources/Chevron.png" Stretch="Uniform" AlignmentX="Left"/>
+                        </Canvas.Background>
+                    </Canvas>
                 </Grid>
             </Button>
 
@@ -112,14 +126,18 @@
             <Button Style="{StaticResource BaseButtonStyle}">
                 <Grid>
                     <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="10"/>
+                        <ColumnDefinition Width="15"/>
                         <ColumnDefinition Width="*"/>
-                        <ColumnDefinition Width="30"/>
+                        <ColumnDefinition Width="25"/>
                     </Grid.ColumnDefinitions>
 
                     <Canvas Grid.Column="0" Background="#50000000"/>
                     <Label x:Name="LblText3" Content="ICC10" Grid.Column="1" Style="{StaticResource TextBlockStyle}"/>
-                    <Canvas Grid.Column="2" Background="#50F0F0F0"/>
+                    <Canvas Grid.Column="2">
+                        <Canvas.Background>
+                            <ImageBrush ImageSource="Resources/Chevron.png" Stretch="Uniform" AlignmentX="Left"/>
+                        </Canvas.Background>
+                    </Canvas>
                 </Grid>
             </Button>
 
@@ -128,25 +146,22 @@
             <Button Style="{StaticResource BaseButtonStyle}">
                 <Grid>
                     <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="10"/>
+                        <ColumnDefinition Width="15"/>
                         <ColumnDefinition Width="*"/>
-                        <ColumnDefinition Width="30"/>
+                        <ColumnDefinition Width="25"/>
                     </Grid.ColumnDefinitions>
 
                     <Canvas Grid.Column="0" Background="#50000000"/>
                     <Label x:Name="LblText4" Content="Tactics" Grid.Column="1" Style="{StaticResource TextBlockStyle}"/>
-                    <Canvas Grid.Column="2" Background="#50F0F0F0"/>
+                    <Canvas Grid.Column="2">
+                        <Canvas.Background>
+                            <ImageBrush ImageSource="Resources/Chevron.png" Stretch="Uniform" AlignmentX="Left"/>
+                        </Canvas.Background>
+                    </Canvas>
                 </Grid>
             </Button>
         </StackPanel>
 
-        <!--<views:MenuPanelView/>-->
-        <ContentPresenter x:Name="UserMainContext" Grid.Column="1" Content="{Binding Path=CurrentViewModel}"/>
-        <!--<DockPanel  Grid.Column="1">
-            <DockPanel.Background>
-                <ImageBrush ImageSource="Resources/LK.png" Stretch="UniformToFill"/>
-
-            </DockPanel.Background>
-        </DockPanel>-->       
+        <ContentPresenter Grid.Column="1" Content="{Binding Path=CurrentViewModel}"/>  
     </Grid>
 </Window>

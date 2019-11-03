@@ -17,8 +17,9 @@ namespace WoW_RaidCreator
         protected override void OnStartup(StartupEventArgs e)
         {
             base.OnStartup(e);
-
+            DatabaseConnectionHandler.GetData();
             var window = new MainWindow() { DataContext = new MainWindowViewModel() };
+
             window.Show();
         }
     }
